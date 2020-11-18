@@ -107,3 +107,15 @@ mkdir 2020-11-18-post-three
 
 - gives us all the stuff that has been setup via frontmatter in all 3 `index.md`s
 - [egghead video](https://egghead.io/lessons/gatsby-use-the-graphiql-browser-to-build-queries-for-gatsby)
+
+#### Tutorial step 5 - create home layout component with a GraphQL query
+
+- cd into `src/pages`
+- here, open the `index.js` (that should have been there, as a default, by Gatsby)
+- `import { StaticQuery, graphql } from 'gatsby'` to bring data in
+- refactor the basic default component to `TitleAndDescription`, `Header` and `Layout` components
+- inside the `TitleAndDescription` component, deconstruct data `title` and `description` from props; this data is rendered in `Header` component
+- inside the `return` of `Header`, return the `StaticQuery` component (syntax you see in there is query syntax), one of the props that it takes is the actual graph query
+- inside the `return` of `Layout`, return the `Header` component
+- your localhost page should still run and look different now
+  add some inline styles (inline for now, following the tutorial)
