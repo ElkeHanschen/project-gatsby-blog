@@ -44,3 +44,10 @@ Also, for the times you need to restart the server, quitting the running process
 - cd into the project
 - run `yarn` (`npm install` should also suffice)
 - run `gatsby develop` if you've done everything right, you should now run the project on `http://localhost:8000/`
+
+#### Video tutorial - second step
+
+- run `npm install --save gatsby-source-filesystem@next gatsby-transformer-remark@next`
+- on project root level, create a gatsby config file `touch gatsby-config.js`
+- open file and configure as seen in code
+- your project should still run
