@@ -37,7 +37,7 @@ Also, for the times you need to restart the server, quitting the running process
 
 ### Step by step documentation what happened when - WIP - value of this will be figured out along the way
 
-#### Video tutorial - first step
+#### Video tutorial - step 1
 
 - set up project folder
 - install Gatsby `npm install --global gatsby@next gatsby-cli@next`
@@ -45,9 +45,23 @@ Also, for the times you need to restart the server, quitting the running process
 - run `yarn` (`npm install` should also suffice)
 - run `gatsby develop` if you've done everything right, you should now run the project on `http://localhost:8000/`
 
-#### Video tutorial - second step
+#### Video tutorial - step 2
 
 - run `npm install --save gatsby-source-filesystem@next gatsby-transformer-remark@next`
 - on project root level, create a gatsby config file `touch gatsby-config.js`
 - open file and configure as seen in code
 - your project should still run
+
+#### Video tutorial - step 3
+
+- cd into `src/pages`
+- create sub directories that will then contain the markdown files, pattern here is `YYYY-MM-DD`
+
+```
+mkdir 2020-11-16-post-one
+mkdir 2020-11-17-post-two
+mkdir 2020-11-18-post-three
+```
+
+- cd into single directories and create single `index.md`s in each of those directories
+- edit all (in this example) 3 `index.md` files and create some frontmatter that will be used to create the posts, see code in md files
