@@ -70,11 +70,10 @@ mkdir 2020-11-18-post-three
 #### Tutorial step 4 - GraphiQL Browser to build queries for Gatsby
 
 - in this part of the tutorial, nothing is happening in the code base
-- it's an explanation what GraphiQL is and how it works
+- it's an explanation what GraphiQL is and how it works with searching for queries and keywords in Documentation Explorer
 - GraphiQL is an in-browser IDE to explore data for building queries for Gatsby sites
 - running your project with `gatsby develop` gives you two URLs, one of them this one `http://localhost:8000/___graphql`
-- run your project and check this URL out, try query searches with `siteMetadata` and `allMarkdownRemark`
-
+- run your project and check this URL out, in Documentation Explorer try query searches with `siteMetadata` and `allMarkdownRemark`
 - example `siteMetadata` (execute with `command enter`):
 
 ```
@@ -129,3 +128,149 @@ mkdir 2020-11-18-post-three
 - create a `Header.js` in `components` directory: `touch components/Header.js`
 - adapt `index.js` and `Header.js` as seen in code
 - your project should still run
+
+#### Tutorial step 7 - add list of posts to the blog site with GraphQL page query
+
+in `index.js`
+
+- remove the `StaticQuery` import from `import`, as we will query on page level
+- write the query (using the query syntax), use the `query` keyword, as we get this keyword from GraphQL
+- switch to `http://localhost:8000/___graphql` to check/testwrite your query
+- in Documentation Explorer, browse through the "root"query/search for `allMarkdownRemark`
+  - there, click `MarkdownRemarkConnection`
+  - there you have "edges", which is the pathes/nodes in the file system, click `MarkdownRemarkEdge` next to it
+  - there, next to "node", click `MarkdownRemark`
+  - see "frontmatter", gives us all of the frontmatter options, click on `MarkdownRemarkFrontmatter` next to it
+  - you should now see all of the options:
+
+```
+title: String
+path: String
+date(
+    difference: String
+    formatString: String
+    fromNow: Boolean
+    locale: String
+): Date
+tags: [String]
+excerpt: String
+```
+
+- if you try this little code snippet in the GraphQL browser window (hit `command enter`), you get all the information the blog site has, which should look similar to this:
+
+```
+{
+  "data": {
+    "allMarkdownRemark": {
+      "edges": [
+        {
+          "node": {
+            "frontmatter": {
+              "title": "My second Post! There!",
+              "path": "/post-two",
+              "date": "2020-11-17",
+              "excerpt": "A preview of my second post"
+            }
+          }
+        },
+        {
+          "node": {
+            "frontmatter": {
+              "title": "My first Post! Ha!",
+              "path": "/post-one",
+              "date": "2020-11-16",
+              "excerpt": "A preview of my first post"
+            }
+          }
+        },
+        {
+          "node": {
+            "frontmatter": {
+              "title": "My third Post! Duh!",
+              "path": "/post-three",
+              "date": "2020-11-18",
+              "excerpt": "A preview of my third post"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "extensions": {}
+}
+```
+
+- back to code, add the following query to `index.js`:
+
+```
+{
+	allMarkdownRemark {
+    edges {
+      node {
+        frontmatter {
+          title
+          path
+          date
+        }
+      }
+    }
+  }
+}
+```
+
+- to now bring the query data into our `Layout` component, within the component `console.log(props)` to see the props that we can pass into
+  - inspect the (still running) blog page in the browser
+  - the query data is showing up under the `data` key
+  - this means, that we can destructure `data` from props inside of our `Layout` component
+- within `Layout` component `console.log(edges)`
+  - inspect the (still running) blog page in the browser
+  - you should now see something similar to this:
+
+```
+(3) [{…}, {…}, {…}]
+    0:
+        node:
+            frontmatter:
+            date: "2020-11-18" path: "/post-three" title: "My third Post! Duh!" __proto__: Object
+        __proto__: Object
+    __proto__: Object
+    1:
+        node:
+            frontmatter: {title: "My second Post! There!", path: "/post-two", date: "2020-11-17"} __proto__: Object
+        __proto__: Object
+    2:
+        node:
+            frontmatter: {title: "My first Post! Ha!", path: "/post-one", date: "2020-11-16"} __proto__: Object
+        __proto__: Object
+    length: 3__proto__: Array(0)
+```
+
+- back to code, in `index.js`, adapt the `Layout` component to map over single nodes (edges), pass single edge in
+- from each edge we want to get to the frontmatter; destructure it
+- return a ´<div>´ with the frontmatter title
+- back to blog page on localhost, we should now have a list of our posts showing (meaning, your site should still run), but they are not in order, fix it
+- go back to the GraphQL browser, in Documentation Explorer, go (back) to `allMarkdownRemark`
+- here, you can see that it takes some arguments, one of them being "sort"
+- we can sort on "fields" and we can provide an "order"
+- back to code, in `index.js`, add `sort` to the query:
+
+```
+    query HomepageQuery {
+        allMarkdownRemark(
+            sort: {order: DESC, fields: [frontmatter___date]}
+        ) {
+            edges {
+                node {
+                    frontmatter {
+                        title
+                        path
+                        date
+                    }
+                }
+            }
+        }
+    }
+```
+
+- add some inline styling (for now)
+- your blog page should still run and should show posts in descending order (latest first)
