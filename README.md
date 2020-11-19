@@ -15,7 +15,7 @@
 - grouping posts by tags
 - deploying project via Github Pages
 
-### This Repo is based on workong with
+### This Repo is based on working with
 
 - [egghead video course](https://egghead.io/courses/build-a-blog-with-react-and-markdown-using-gatsby)
 - [Gatsby Hello World Repository](https://github.com/gatsbyjs/gatsby-starter-hello-world)
@@ -274,3 +274,36 @@ excerpt: String
 
 - add some inline styling (for now)
 - your blog page should still run and should show posts in descending order (latest first)
+
+#### Tutorial step 8 - build page slugs dynamically from markdown
+
+heads-up before starting this section:
+
+- working in `gatsby-node.js` needs a restart of the localhost server on every code change
+- best practice:
+  - when done with this section, restart the server in quitting the running process with `control c`, this works better than following pop-ups on localhost to restart from there, trying that had my localhost freezing
+  - run `gatsby clean` `gatsby develop`, your project should run again on localhost
+
+now to section:
+
+- make shown posts clickable
+  - in `index.js`, import `Link` from `"gatsby"`
+  - add `Link` to `Layout` component, add path; links work but of course throw 404s
+- proceed with the following:
+- create and configure `gatsby-node.js` (on root level)
+- inside of `src`, create a `templates` directory; inside `templates` directory, create `blogPost.js`
+- in `blogPost.js`, set up code as seen in file
+- in `gatsby-node.js`, in order to create pages, we use the aptly named create pages API, one of several APIs Gatsby gives access to
+  - `graphql` for finding our files
+  - `actions` which is where `createPage` lives
+  - `createPages` function returns a promise due to the async nature of file creation
+  - get access to blog post template: create a variable `blogPostTemplate` and resolve the path
+  - resolve promise with a call to GraphQL; pass it the query
+  - add `then` to pass the result into a function; result contains the data object with a shape that matches our query (`result.data.allMarkdownRemark.edges`)
+  - add `forEach`, as for each of the `edges` extract the path from the node's frontmatter
+  - call the `createPage()` action
+    - `path` for the page URL
+    - `component:` to render `blogPostTemplate`
+    - `context:` object, that will make its way into our blog post template in `blogPost.js` as a prop
+      - `pathSlug:` named this way as "path" is a reserved keyword; value `path` is what is supplied in our frontmatter
+- when finished, click on blog posts, you now should have single blog posts (with correct URLs) matching the content within `blogPost.js` `Template` component
