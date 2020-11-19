@@ -349,3 +349,44 @@ return (
 - add a `title` to the `return` `<div>`
 - add inline styling (for now)
 - now title and posts should show up on localhost, your page should still run
+
+#### Tutorial step 10 - add next and previous links
+
+in `gatsby-node.js`
+
+- add `index` to know where we are in the total list
+- `previous: index === 0 ? null : posts[index - 1].node`
+  - if our index is zero we won't have anything for previous, because if it's zero it's the first one and we can't go backwards from there
+  - otherwise we do posts: `index - 1` is the post before aka previous
+- `next: index === (posts.length - 1) ? null : posts[index + 1].node`
+  - if our index is the length of the array (minus 1), if it's the last one, there is no next
+  - otherwise we do posts: `index + 1`, is the post after aka next
+- restart the local server
+- in `blogPost.js`, add `pageContext` to `const Template` in order to get what we've put into `createPage` in `gatsby-node.js`
+- in `gatsby-node.js`, in order to get the links displayed in the correct order, we need a `sort` in the query:
+
+```
+query {
+    allMarkdownRemark (
+        sort: {order: ASC, fields: [frontmatter___date]}
+    ) {
+        edges {
+            node {
+                frontmatter {
+                    path
+                }
+            }
+        }
+    }
+}
+```
+
+- if necessary, double check in `http://localhost:8000/___graphql` , Documentation Explorer, if that is what you really want to query for
+- restart gatsby develop
+- in `blogPost.js`, add HTML links
+  - import `Link` from `"gatsby"`
+  - `{next && <Link to={next.frontmatter.path}>Next<Link/>}`
+  - `&&` checks for the truthyness of next; if true, link with "Next" will be rendered
+  - do the same for `previous`
+- add some inline styling (for now)
+- next and previous links should show up and work
