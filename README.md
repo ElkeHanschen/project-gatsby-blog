@@ -119,3 +119,13 @@ mkdir 2020-11-18-post-three
 - inside the `return` of `Layout`, return the `Header` component
 - your localhost page should still run and look different now
   add some inline styles (inline for now, following the tutorial)
+
+#### Tutorial step 6 - clean up `index.js`, create Header component
+
+- clean up `index.js`
+- extract `Header` and `TitleAndDescription` components
+- cd into `src/pages`
+- create new `components` directory: `mkdir components`
+- create a `Header.js` in `components` directory: `touch components/Header.js`
+- adapt `index.js` and `Header.js` as seen in code
+- your project should still run
