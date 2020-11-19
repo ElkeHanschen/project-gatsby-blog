@@ -255,21 +255,21 @@ excerpt: String
 - back to code, in `index.js`, add `sort` to the query:
 
 ```
-    query HomepageQuery {
-        allMarkdownRemark(
-            sort: {order: DESC, fields: [frontmatter___date]}
-        ) {
-            edges {
-                node {
-                    frontmatter {
-                        title
-                        path
-                        date
-                    }
+query HomepageQuery {
+    allMarkdownRemark(
+        sort: {order: DESC, fields: [frontmatter___date]}
+    ) {
+        edges {
+            node {
+                frontmatter {
+                    title
+                    path
+                    date
                 }
             }
         }
     }
+}
 ```
 
 - add some inline styling (for now)
@@ -307,3 +307,45 @@ now to section:
     - `context:` object, that will make its way into our blog post template in `blogPost.js` as a prop
       - `pathSlug:` named this way as "path" is a reserved keyword; value `path` is what is supplied in our frontmatter
 - when finished, click on blog posts, you now should have single blog posts (with correct URLs) matching the content within `blogPost.js` `Template` component
+
+#### Tutorial step 9 - build dynamic blog posts
+
+in `blogPost.js`
+
+- to get the HTML for our blog posts, write a GraphQL query that will search `markdownRemark` for the file that has a path of a post
+- `markdownRemark`, not `allMarkdownRemark`, as we are searching for one file, not all of them
+
+```
+query($pathSlug: String!) {
+    markdownRemark(frontmatter: { path: {eq: $pathSlug} }) {
+        html
+        frontmatter {
+            title
+        }
+    }
+}
+```
+
+- get the `pathSlug` variable with `$pathSlug`, assign a `String!` - exclamation point means that it's required
+- we are looking for a `path` that is equal to `$pathSlug`
+- we want `html` and `title`
+- replace static HTML in `Template` component `return`
+
+```
+return (
+    <div>
+        <h1 style={{fontFamily: 'avenir'}}>{title}</h1>
+        <div className='blogpost'
+            dangerouslySetInnerHTML={{__html: html}}
+            style={{fontFamily: 'avenir'}}
+        />
+    </div>
+)
+```
+
+- only add the class name to the `<div />` to check if it is rendered on page
+- the `<div />` will be self-closing
+- use React's `dangerouslySetInnerHTML` API and pass it an object `dangerouslySetInnerHTML={{__html: html}}`, this is going to render the HTML from the query
+- add a `title` to the `return` `<div>`
+- add inline styling (for now)
+- now title and posts should show up on localhost, your page should still run
