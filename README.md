@@ -5,7 +5,7 @@
   Gatsby Blog
 </h1>
 
-## Readme is still a WIP and will be extended along coding
+## Readme is a WIP and will be extended while along coding
 
 ### What is this about?
 
