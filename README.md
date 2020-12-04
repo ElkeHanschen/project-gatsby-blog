@@ -61,6 +61,8 @@ Also, for the times you need to restart the server, quitting the running process
 
 [Tutorial 12 - Use `pageContext` to display tags](#tutorial-12)
 
+[Tutorial 13 - Deploy site with netlify](#tutorial-13)
+
 ### Tutorial 1
 
 #### Project setup
@@ -471,3 +473,13 @@ in `gatsby-node.js`
 - hit `http://localhost:8000/tags/` and all tags should show up and should (after clicking them) redirect to clicked page
 - for now (!!) add some inline styling
 - go back to `src/pages/index.js` and add a link to browse all tags
+
+### Tutorial 13
+
+#### Deploy site with netlify
+
+I did not do the deployment on netlify as my focus was to check if I get the blog functionality complete and running. If you want to try this out, [here's the egghead video no 13 to this](https://egghead.io/lessons/gatsby-deploy-a-gatsby-site-with-netlify)
+
+### Famous last words
+
+Don't forget to run `gatsby build` to get production ready files
