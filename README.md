@@ -59,7 +59,7 @@ Also, for the times you need to restart the server, quitting the running process
 
 [Tutorial 11 - Expose tags data for blog](#tutorial-11)
 
-[Tutorial 12 - To Be Done](#tutorial-12)
+[Tutorial 12 - Use `pageContext` to display tags](#tutorial-12)
 
 ### Tutorial 1
 
@@ -456,3 +456,18 @@ in `gatsby-node.js`
   - we're calling `createTagPages` function, which is creating the index of all tags (`localhost:8000/tags`)
   - restart gatsby develop
   - hit `localhost:8000/tags`, you should see "tags here" which means that tags pages has been created and the tags you have in your markdown file are passed into the site
+
+### Tutorial 12
+
+#### Use `pageContext` to display tags
+
+- now that we know that our `/tags` page have been created, we want to create dedicated tag URLs
+- in `gatsby-node.js` in `tags.forEach()`, we need to grab our list of nodes (posts)
+- then, we have a similar call to `createPage`, within a string template we will pass it a path
+- edit `singleTagIndex.js`, destructure `posts` and `tagName` from `pageContext`
+- delete the static text placeholder, for that add another `<div>` with `<ul>`, inside of that `<ul>` we map over our posts and return an `<li>`; inside the `<li>` we link to the correct URL path and render the title text on side
+- do the same for `allTagsIndex.js`
+- hit (in my example, for a tag I named that way) `localhost:8000/tags/one%20tag`, a single tag page should work
+- hit `http://localhost:8000/tags/` and all tags should show up and should (after clicking them) redirect to clicked page
+- for now (!!) add some inline styling
+- go back to `src/pages/index.js` and add a link to browse all tags

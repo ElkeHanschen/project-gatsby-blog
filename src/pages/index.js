@@ -26,6 +26,9 @@ const Layout = ({data}) => {
                         </div>
                     )
                 })}
+                <div>
+                    <Link to='/tags'>Browse blog posts by tag</Link>
+                </div>
             </div>
         </div>
     )
