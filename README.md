@@ -10,16 +10,15 @@
 ### What is this about?
 
 - a Gatsby site that dynamically renders Markdown files from the local filesystem into HTML
-- GraphQL is used to query posts to display results on an index page
+- GraphQL is used to query posts to display results on pages
 - linking between posts
 - grouping posts by tags
-- deploying project via Github Pages
 
 ### This Repo is based on working with
 
 - [egghead video course](https://egghead.io/courses/build-a-blog-with-react-and-markdown-using-gatsby)
 - [Gatsby Hello World Repository](https://github.com/gatsbyjs/gatsby-starter-hello-world)
-- [egghead GitHub Repo to this](https://github.com/eggheadio-projects/build-a-blog-with-react-and-markdown-using-gatsby-notes), where you would also be able to follow along in a probably more professional way XD
+- [egghead GitHub Repo to this](https://github.com/eggheadio-projects/build-a-blog-with-react-and-markdown-using-gatsby-notes), where you would also be able to go into this yourself
 
 ### How to run this?
 
@@ -31,11 +30,10 @@
 
 ### Important heads-up
 
-While coding the first try in one go, using `gatsby clean` inbetween more than once saved my butt.
-If errors, try that before freaking out.
-Also, for the times you need to restart the server, quitting the running process with `control c` worked better than following pop-ups on localhost. Just so you know.
+If something's fishy (weird errors in terminal), use `gatsby clean` inbetween and run `gatsby develop` again.
+Also, for the times you need to restart the gatsby server, quitting the running process with `control c` worked better than following pop-ups on localhost.
 
-### Step by step documentation what happened when - WIP
+### Tutorial Steps
 
 [Tutorial 1 - Project set-up](#tutorial-1)
 
@@ -104,42 +102,91 @@ mkdir 2020-11-18-post-three
 #### What's GraphiQL Browser to check for building queries for Gatsby
 
 - in this part of the tutorial, nothing is happening in the code base
-- it's an explanation what GraphiQL is and how it works with searching for queries and keywords in Documentation Explorer
+- it's an explanation of what GraphiQL is and how it works with searching for queries and keywords in Documentation Explorer
 - GraphiQL is an in-browser IDE to explore data for building queries for Gatsby sites
 - running your project with `gatsby develop` gives you two URLs, one of them this one `http://localhost:8000/___graphql`
-- run your project and check this URL out, in Documentation Explorer try query searches with `siteMetadata` and `allMarkdownRemark`
-- example `siteMetadata` (execute with `command enter`):
+  ![GraphiQL in Browser](screenshots/Screenshot-01.png)
+- Documentation Explorer on the right side of the GraphiQL site gives a peek into the schema and what kind of stuff we can query for
+- if you click on "Root Types", "query: Query", this gives a list of all of the stuff we can look for
+- search for "site", "siteMetadata", this gives a "title" and "description"
+- Documentation Explorer on the left side has a kind of code panel, here, create a code snippet accordingly and hit `command enter` to run it:
 
 ```
 {
     site {
-      siteMetadata
+        siteMetadata {
+            title
+            description
+        }
     }
 }
 ```
 
-- gives us all the stuff that has been configured in `gatsby-config.js`
-- example `allMarkdownRemark` (execute with `command enter`):
+![Returned result of code snippet](screenshots/Screenshot-02.png)
+
+- you now see the `siteMetadata` that's configured in the `gatsby-config.js`
+- let's do the same for `allMarkdownRemark`
+- after browsing through what we can query for, change (and try out) the code snippets within the code panel from:
+
+```
+{
+    allMarkdownRemark
+}
+```
+
+![allMarkdownRemark](screenshots/Screenshot-03.png)
+to:
 
 ```
 {
 	allMarkdownRemark {
-    edges {
-      node {
-        frontmatter {
-          title
-          path
-          date
-          excerpt
-        }
-      }
-    }
-  }
+        edges
 }
 ```
 
-- gives us all the stuff that has been setup via frontmatter in all 3 `index.md`s
-- [egghead video](https://egghead.io/lessons/gatsby-use-the-graphiql-browser-to-build-queries-for-gatsby)
+![allMarkdownRemark-edges](screenshots/Screenshot-04.png)
+to:
+
+```
+{
+    allMarkdownRemark {
+        edges {
+            node {
+                id
+            }
+        }
+    }
+}
+```
+
+![allMarkdownRemark-edges-node-id](screenshots/Screenshot-05.png)
+
+- always hit `command enter` to execute these code snippets to see what you get
+- also, think of `edges` like of the file path
+- looking at the result, apparently we have three different edges
+- now change the code snippet in the code panel to:
+
+```
+{
+    allMarkdownRemark {
+        edges {
+            node {
+                frontmatter {
+                    title
+                    path
+                    date
+                    excerpt
+                }
+            }
+        }
+    }
+}
+```
+
+- hit `command enter`
+  ![allMarkdownRemark-edges-node-frontmatter](screenshots/Screenshot-06.png)
+- you can see that `frontmatter` is expended to all of the stuff that has been set up in all three `index.md`s
+- [egghead video for the detailled explanation](https://egghead.io/lessons/gatsby-use-the-graphiql-browser-to-build-queries-for-gatsby)
 
 ### Tutorial 5
 
