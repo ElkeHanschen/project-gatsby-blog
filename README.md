@@ -26,7 +26,7 @@
 - clone this repo
 - cd into project
 - `npm install`
-- run `Gatsby develop`
+- run `gatsby develop`
 - should now run on `http://localhost:8000/`
 
 ### Important heads-up
@@ -35,9 +35,35 @@ While coding the first try in one go, using `gatsby clean` inbetween more than o
 If errors, try that before freaking out.
 Also, for the times you need to restart the server, quitting the running process with `control c` worked better than following pop-ups on localhost. Just so you know.
 
-### Step by step documentation what happened when - WIP - value of this will be figured out along the way
+### Step by step documentation what happened when - WIP
 
-#### Tutorial step 1 - project set-up
+[Tutorial 1 - Project set-up](#tutorial-1)
+
+[Tutorial 2 - Install plugins for transforming markdown, create `gatsby-config.js`](#tutorial-2)
+
+[Tutorial 3 - Create and format markdown directories and files](#tutorial-3)
+
+[Tutorial 4 - What's GraphiQL Browser to check for building queries for Gatsby](#tutorial-4)
+
+[Tutorial 5 - Create Home layout component with a GraphQL query](#tutorial-5)
+
+[Tutorial 6 - Clean up `index.js`, create Header component](#tutorial-6)
+
+[Tutorial 7 - Add list of posts to the blog site with GraphQL page query](#tutorial-7)
+
+[Tutorial 8 - Build page slugs dynamically from markdown](#tutorial-8)
+
+[Tutorial 9 - Build dynamic blog posts](#tutorial-9)
+
+[Tutorial 10 - Add "next" and "previous" links](#tutorial-10)
+
+[Tutorial 11 - Expose tags data for blog](#tutorial-11)
+
+[Tutorial 12 - To Be Done](#tutorial-12)
+
+### Tutorial 1
+
+#### Project setup
 
 - set up project folder
 - install Gatsby `npm install --global gatsby@next gatsby-cli@next`
@@ -45,14 +71,18 @@ Also, for the times you need to restart the server, quitting the running process
 - run `yarn` (`npm install` should also suffice)
 - run `gatsby develop` if you've done everything right, you should now run the project on `http://localhost:8000/`
 
-#### Tutorial step 2 - install plugins for transforming markdown, create `gatsby-config.js`
+### Tutorial 2
+
+#### Install plugins for transforming markdown, create `gatsby-config.js`
 
 - run `npm install --save gatsby-source-filesystem@next gatsby-transformer-remark@next`
 - on project root level, create a gatsby config file `touch gatsby-config.js`
 - open file and configure as seen in code
 - your project should still run
 
-#### Tutorial step 3 - create and format markdown directories and files
+### Tutorial 3
+
+#### Create and format markdown directories and files
 
 - cd into `src/pages`
 - create sub directories that will then contain the markdown files, pattern here is `YYYY-MM-DD`
@@ -67,7 +97,9 @@ mkdir 2020-11-18-post-three
 - edit all (in this example) 3 `index.md` files and create some frontmatter that will be used to create the posts, see code in md files
 - your project should still run
 
-#### Tutorial step 4 - GraphiQL Browser to build queries for Gatsby
+### Tutorial 4
+
+#### What's GraphiQL Browser to check for building queries for Gatsby
 
 - in this part of the tutorial, nothing is happening in the code base
 - it's an explanation what GraphiQL is and how it works with searching for queries and keywords in Documentation Explorer
@@ -107,7 +139,9 @@ mkdir 2020-11-18-post-three
 - gives us all the stuff that has been setup via frontmatter in all 3 `index.md`s
 - [egghead video](https://egghead.io/lessons/gatsby-use-the-graphiql-browser-to-build-queries-for-gatsby)
 
-#### Tutorial step 5 - create home layout component with a GraphQL query
+### Tutorial 5
+
+#### Create Home layout component with a GraphQL query
 
 - cd into `src/pages`
 - here, open the `index.js` (that should have been there, as a default, by Gatsby)
@@ -119,7 +153,9 @@ mkdir 2020-11-18-post-three
 - your localhost page should still run and look different now
   add some inline styles (inline for now, following the tutorial)
 
-#### Tutorial step 6 - clean up `index.js`, create Header component
+### Tutorial 6
+
+#### Clean up `index.js`, create Header component
 
 - clean up `index.js`
 - extract `Header` and `TitleAndDescription` components
@@ -129,7 +165,9 @@ mkdir 2020-11-18-post-three
 - adapt `index.js` and `Header.js` as seen in code
 - your project should still run
 
-#### Tutorial step 7 - add list of posts to the blog site with GraphQL page query
+### Tutorial 7
+
+#### Add list of posts to the blog site with GraphQL page query
 
 in `index.js`
 
@@ -275,7 +313,9 @@ query HomepageQuery {
 - add some inline styling (for now)
 - your blog page should still run and should show posts in descending order (latest first)
 
-#### Tutorial step 8 - build page slugs dynamically from markdown
+### Tutorial 8
+
+#### Build page slugs dynamically from markdown
 
 heads-up before starting this section:
 
@@ -308,7 +348,9 @@ now to section:
       - `pathSlug:` named this way as "path" is a reserved keyword; value `path` is what is supplied in our frontmatter
 - when finished, click on blog posts, you now should have single blog posts (with correct URLs) matching the content within `blogPost.js` `Template` component
 
-#### Tutorial step 9 - build dynamic blog posts
+### Tutorial 9
+
+#### Build dynamic blog posts
 
 in `blogPost.js`
 
@@ -350,7 +392,9 @@ return (
 - add inline styling (for now)
 - now title and posts should show up on localhost, your page should still run
 
-#### Tutorial step 10 - add next and previous links
+### Tutorial 10
+
+#### Add "next" and "previous" links
 
 in `gatsby-node.js`
 
@@ -390,3 +434,25 @@ query {
   - do the same for `previous`
 - add some inline styling (for now)
 - next and previous links should show up and work
+
+### Tutorial 11
+
+#### Expose tags data for blog
+
+- in `src/templates`, create `allTagsIndex.js` and `singleTagIndex.js`files
+- add code as seen in respective files
+
+in `gatsby-node.js`
+
+- within `exports.createPages`
+
+  - create an empty object `postsByTag` - the idea here is to dynamically create a key here for each of our tags; each of those keys will have an array of the posts that use that tag
+  - create a `forEach()` method on posts to check for tags
+  - after we called the `forEach()` on all of our posts, we should have a built up object that has each of our tags represented with an array of nodes for each one
+
+  - within `graphql` query, we are looking for all of the markdown files inside of the `src/pages` directory
+  - `tags` added in the query are also returned (duh), so add `title` and `tags` here
+  - the result of the query (posts created) is passed down to `.then`
+  - we're calling `createTagPages` function, which is creating the index of all tags (`localhost:8000/tags`)
+  - restart gatsby develop
+  - hit `localhost:8000/tags`, you should see "tags here" which means that tags pages has been created and the tags you have in your markdown file are passed into the site
