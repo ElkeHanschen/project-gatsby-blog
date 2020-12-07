@@ -5,8 +5,6 @@
   Gatsby Blog
 </h1>
 
-## Readme is a WIP and will be extended while along coding
-
 ### What is this about?
 
 - a Gatsby site that dynamically renders Markdown files from the local filesystem into HTML
@@ -14,11 +12,10 @@
 - linking between posts
 - grouping posts by tags
 
-### This Repo is based on working with
+### This Repo is based on:
 
-- [egghead video course](https://egghead.io/courses/build-a-blog-with-react-and-markdown-using-gatsby)
-- [Gatsby Hello World Repository](https://github.com/gatsbyjs/gatsby-starter-hello-world)
-- [egghead GitHub Repo to this](https://github.com/eggheadio-projects/build-a-blog-with-react-and-markdown-using-gatsby-notes), where you would also be able to go into this yourself
+- [egghead video course](https://egghead.io/courses/build-a-blog-with-react-and-markdown-using-gatsby), also see [egghead GitHub Repo to this](https://github.com/eggheadio-projects/build-a-blog-with-react-and-markdown-using-gatsby-notes)
+- Basis to start is the [Gatsby Hello World Repository](https://github.com/gatsbyjs/gatsby-starter-hello-world)
 
 ### How to run this?
 
@@ -31,7 +28,7 @@
 ### Important heads-up
 
 If something's fishy (weird errors in terminal), use `gatsby clean` inbetween and run `gatsby develop` again.
-Also, for the times you need to restart the gatsby server, quitting the running process with `control c` worked better than following pop-ups on localhost.
+For the times you need to restart the gatsby server, quitting the running process with `control c` in your terminal might work better than following refresh pop-ups on localhost.
 
 ### Tutorial Steps
 
