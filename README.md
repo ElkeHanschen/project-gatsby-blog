@@ -14,20 +14,22 @@
 
 ### This Repo is based on:
 
-- [egghead video course](https://egghead.io/courses/build-a-blog-with-react-and-markdown-using-gatsby), also see [egghead GitHub Repo to this](https://github.com/eggheadio-projects/build-a-blog-with-react-and-markdown-using-gatsby-notes)
-- Basis to start is the [Gatsby Hello World Repository](https://github.com/gatsbyjs/gatsby-starter-hello-world)
+- [egghead video course](https://egghead.io/courses/build-a-blog-with-react-and-markdown-using-gatsby)
+- also see [egghead GitHub Repo to this](https://github.com/eggheadio-projects/build-a-blog-with-react-and-markdown-using-gatsby-notes)
+- basis to start is the [Gatsby Hello World Repository](https://github.com/gatsbyjs/gatsby-starter-hello-world)
 
 ### How to run this?
 
 - clone this repo
 - cd into project
 - `npm install`
-- run `gatsby develop`
+- run `npm run develop` as first run
+- run `gatsby develop` when already build one time
 - should now run on `http://localhost:8000/`
 
 ### Important heads-up
 
-If something's fishy (weird errors in terminal), use `gatsby clean` inbetween and run `gatsby develop` again.
+If something's fishy (weird errors in terminal) during development, use `gatsby clean` inbetween and run `gatsby develop` again.
 For the times you need to restart the gatsby server, quitting the running process with `control c` in your terminal might work better than following refresh pop-ups on localhost.
 
 ### Tutorial Steps
